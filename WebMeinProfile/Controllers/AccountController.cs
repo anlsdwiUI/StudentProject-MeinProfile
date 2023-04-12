@@ -42,6 +42,12 @@ namespace WebMeinProfile.Controllers
                     await file[0].CopyToAsync(stream);
                 }
 
+                var availUsr = await _userManager.FindByNameAsync(usr.Username);
+                if (availUsr != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Username telah digunakan.");
+                    return View(usr);
+                }
                 if (ModelState.IsValid)
                 {
                     // Create user
