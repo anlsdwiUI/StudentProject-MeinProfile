@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser> UserManager
+@{
+    var users = UserManager.Users.ToList();
+}
+
+<div class="jumbotron jumbotron-fluid bg-secondary text-light">
+    <div class="container">
+        <h1 class="display-4">List Data Profile</h1>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>FullName</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Job</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.FullName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Age</td>
+                    <td>@user.Job</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

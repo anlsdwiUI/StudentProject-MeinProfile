@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="text-center mb-0">Private Profile</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-3 font-weight-bold">Username :</div>
+                            <div class="col-md-9">@user.UserName</div>
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-md-3 font-weight-bold">Full Name :</div>
+                            <div class="col-md-9">@user.FullName</div>
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-md-3 font-weight-bold">Email :</div>
+                            <div class="col-md-9">@user.Email</div>
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-md-3 font-weight-bold">Age :</div>
+                            <div class="col-md-9">@user.Age</div>
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-md-3 font-weight-bold">Job :</div>
+                            <div class="col-md-9">@user.Job</div>
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-md-3 font-weight-bold">Photo Profile :</div>
+                            <div class="col-md-9">
+                                <img src="@Url.Content("/upload/"+user.Photo)"
+                                     style="max-width: 200px; max-height: 200px;"
+                                     class="img-fluid rounded">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            @Html.ActionLink("Edit Profile", "ProfileEdit", new { /* id = Model.PrimaryKey */ },
+                        new { @class = "btn btn-secondary" })
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card p-3">
+                    <h3 class="text-center mb-4">You are not logged in, please log in first</h3>
+                    <div class="d-flex justify-content-center align-items-center mt-4">
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-primary btn-lg">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
